@@ -3,7 +3,7 @@ import { HashRouter as Router, Route, Switch, Link, Match } from 'react-router-d
 import StudentList from './StudentList';
 import CampusList from './CampusList';
 import Navbar from './Navbar';
-import store, { gotStudentsFromServer } from '../storeExample';
+import store, { gotStudentsFromServer, gotCampusesFromServer } from '../storeExample';
 import axios from 'axios';
 
 
@@ -16,12 +16,20 @@ export default class Main extends Component {
     componentDidMount(){
         this.unsubscribe = store.subscribe(()=> this.setState(store.getState()));
 
+        Promise.all([
         axios.get('/api/student')
         .then(res => res.data)
         .then(students => { 
             const gotStudentsAction = gotStudentsFromServer(students);
             store.dispatch(gotStudentsAction);
-        })
+        }),
+        axios.get('/api/campus')
+        .then(res => res.data)
+        .then(campuses => { 
+            const gotCampusesAction = gotCampusesFromServer(campuses);
+            store.dispatch(gotCampusesAction);
+        })]
+        )
     }
 
     componentWillUnmount() {
@@ -33,8 +41,8 @@ export default class Main extends Component {
                     <div>
                         <Navbar />
                         <Switch>
-                            <Route exact path ="/" component={CampusList} />
-                            <Route exact path ="/campus" component={CampusList} />
+                            <Route exact path ="/" render={()=> <CampusList campuses={this.state.campuses} />} />
+                            <Route exact path ="/campus" render={()=> <CampusList campuses={this.state.campuses} />} />
                             <Route exact path ="/student" render={() => <StudentList students={this.state.students} /> } />
                         </Switch>
                     </div>
@@ -44,4 +52,5 @@ export default class Main extends Component {
 
  
 // <Route exact path ="/student" component={StudentList} />
+// <Route exact path ="/campus" component={CampusList} />
 //
