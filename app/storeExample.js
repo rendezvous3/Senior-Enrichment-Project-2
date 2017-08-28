@@ -8,7 +8,7 @@ const GOT_CAMPUS_FROM_SERVER = 'GOT_CAMPUS_FROM_SERVER';
 // ACTION CREATOR
 export function gotStudentsFromServer(students) {
     return {
-        type: GOT_STUDENT_FROM_SERVER,
+        type: GOT_STUDENTS_FROM_SERVER,
         students
     }
 }
