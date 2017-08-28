@@ -1,4 +1,4 @@
-import { combineReducers } from 'redux'
+import { combineReducers } from 'redux';
 
 const initialState = {}
 
@@ -9,3 +9,7 @@ const rootReducer = function(state = initialState, action) {
 };
 
 export default rootReducer
+
+// export default combineReducers({
+//   rootReducer
+// })
