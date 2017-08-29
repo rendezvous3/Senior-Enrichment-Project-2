@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Switch, Link, Match } from 'react-route
 import StudentList from './StudentList';
 import CampusList from './CampusList';
 import SingleCampus from './SingleCampus';
+import SingleStudent from './SingleStudent';
 import Navbar from './Navbar';
 import store, { gotStudentsFromServer, gotCampusesFromServer, fetchCampuses, fetchStudents } from '../storeExample';
 import axios from 'axios';
@@ -37,6 +38,7 @@ export default class Main extends Component {
                             <Route exact path ="/" render={()=> <CampusList campuses={this.state.campuses} />} />
                             <Route path ="/campus/:campusId" component={SingleCampus} />} />
                             <Route exact path ="/campus" render={()=> <CampusList campuses={this.state.campuses} />} />
+                            <Route exact path ="/student/:studentId" component={SingleStudent} /> />
                             <Route exact path ="/student" render={() => <StudentList students={this.state.students} /> } />
                         </Switch>
                         </div>
