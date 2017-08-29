@@ -64,7 +64,7 @@ export default class AddCampus extends Component {
                                onChange={ this.handleChangeImg }
                                type="text" />
                     </div>
-                    <button type="submit" className='btn btn-info'>Add Campus</button>
+                    <button type="submit" className='btn-block btn btn-info'>Add Campus</button>
                     </form>
                 </div>)
     }

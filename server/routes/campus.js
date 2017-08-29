@@ -35,7 +35,9 @@ campus.delete('/:campusId', (req, res, next) => {
 })
 
 campus.get('/:campusId', (req, res, next) => {
-    Campus.findById(req.params.campusId)
+    Campus.findById(req.params.campusId, {
+        include: [{ all: true, nested: true }]
+    })
     .then(campus => res.json(campus))
     .catch(next)
 });

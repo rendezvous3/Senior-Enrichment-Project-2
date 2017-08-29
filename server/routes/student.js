@@ -3,7 +3,7 @@ const db = require('../../db');
 const Student = require('../../db/models').Student;
 
 student.get('/', (req, res, next) => {
-  	Student.findAll({},{
+  	Student.findAll({
         include: [{ all: true, nested: true }]
     })
     .then(students => res.json(students))

@@ -14,14 +14,14 @@ const CampusList = (props) => {
                 </div>)
     });
     return(<div className="row">
-        <div className="col-sm-8">
+        <div className="col-sm-9">
             <h4>Campus List</h4>
             <hr />
             <div className="row">
             {campusList}
             </div>
         </div>
-        <div className="col-sm-4">
+        <div className="col-sm-3">
             <AddCampus />
         </div>
         </div>)
