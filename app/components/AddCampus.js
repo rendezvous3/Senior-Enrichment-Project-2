@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import store, { writeCampus, gotNewCampus, writeCampusImgUrl } from '../storeExample';
+import store, { writeCampus, gotNewCampus, writeCampusImgUrl, postCampus } from '../storeExample';
 
 
 export default class AddCampus extends Component {
@@ -37,13 +37,17 @@ export default class AddCampus extends Component {
         e.preventDefault();
         const name = this.state.currentCampusEntry
         const imageUrl = this.state.currentImgUrl
+        const campusData = { name, imageUrl }
+        const postMessageThunk = postCampus(campusData);
+        store.dispatch(postMessageThunk);
 
-        axios.post('/api/campus', { name, imageUrl })
-        .then(res => res.data)
-        .then(newCampus => {
-            store.dispatch(gotNewCampus(newCampus));
-        })
-        .catch(console.error)
+
+        // axios.post('/api/campus', { name, imageUrl })
+        // .then(res => res.data)
+        // .then(newCampus => {
+        //     store.dispatch(gotNewCampus(newCampus));
+        // })
+        // .catch(console.error)
     }
 
     render() {

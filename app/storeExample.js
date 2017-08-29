@@ -1,6 +1,8 @@
 import { applyMiddleware, createStore } from 'redux';
 import createLogger from 'redux-logger';
+import thunkMiddleware from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
+import axios from 'axios';
 
 // ACTION TYPES
 const GOT_STUDENTS_FROM_SERVER = 'GOT_STUDENTS_FROM_SERVER';
@@ -96,6 +98,55 @@ export function writeCampusImgUrl(imageUrl){
 }
 
 
+// THUNK CREATORS
+
+export function fetchCampuses(){
+
+    // THUNK
+    return function thunk(dispatch, getState) {
+        axios.get('/api/campus')
+        .then(res => res.data)
+        .then(campuses => { 
+            const gotCampusesAction = gotCampusesFromServer(campuses);
+            dispatch(gotCampusesAction);
+        })
+    }
+}
+
+export function fetchStudents() {
+    return function thunk(dispatch, getState) {
+        axios.get('/api/student')
+        .then(res => res.data)
+        .then(students => { 
+            const gotStudentsAction = gotStudentsFromServer(students);
+            dispatch(gotStudentsAction);
+        })        
+    }
+}
+
+export function postCampus(campusData) {
+    return function thunk(dispatch, getState){
+        axios.post('/api/campus', campusData)
+        .then(res => res.data)
+        .then(newCampus => {
+            store.dispatch(gotNewCampus(newCampus));
+        })
+        .catch(console.error)
+    }
+}
+
+export function postStudent(studentData) {
+    return function(dispatch, getState) {
+        axios.post('/api/student', studentData)
+        .then(res => res.data)
+        .then(newStudent => {
+            store.dispatch(gotNewStudent(newStudent))
+        })
+        .catch(console.error)         
+    }
+}
+
+
 const InitialState = {
     students: [],
     campuses: [],
@@ -137,15 +188,17 @@ function reducer(state=InitialState, action) {
 }
 
 //const store = createStore(reducer, applyMiddleware(logger));
-const store = createStore(reducer, composeWithDevTools(applyMiddleware(
-    createLogger()
-  )));
-export default store;
-
-// const store = createStore(
-//   reducer,
-//   composeWithDevTools(applyMiddleware(
-//     thunkMiddleware,
+// const store = createStore(reducer, composeWithDevTools(applyMiddleware(
 //     createLogger()
-//   ))
-// );
+//   )));
+
+
+const store = createStore(
+  reducer,
+  composeWithDevTools(applyMiddleware(
+    thunkMiddleware,
+    createLogger()
+  ))
+);
+
+export default store;

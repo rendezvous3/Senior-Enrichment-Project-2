@@ -4,7 +4,8 @@ import store, { writeStudentCampusId,
                 writeStudent,
                 writeStudentImg,
                 writeStudentEmail,
-                gotNewStudent } from '../storeExample';
+                gotNewStudent,
+                postStudent } from '../storeExample';
 
 
 export default class AddStudent extends Component {
@@ -21,7 +22,7 @@ export default class AddStudent extends Component {
     componentDidMount(){
         this.unsubscribe = store.subscribe(()=> {
             this.setState(store.getState());
-            console.log(this.state);
+            //console.log(this.state);
         });
     }
 
@@ -48,20 +49,24 @@ export default class AddStudent extends Component {
     handleSubmit(e) {
         e.preventDefault();
         const name = this.state.currentStudentName
-        const imgUrl = this.state.currentImgUrl
+        const imageUrl = this.state.currentStudentImg
         const email = this.state.currentStudentEmail
         const campusId = this.state.campusId
-        console.log(name,imgUrl, email, campusId);
-        axios.post('/api/student', 
-        { 'name': name,
-          'imageUrl':imgUrl,
-          'email': email,
-          'campusId': campusId})
-        .then(res => res.data)
-        .then(newStudent => {
-            store.dispatch(gotNewStudent(newStudent))
-        })
-        .catch(console.error)  
+        const studentData = { name, imageUrl, email, campusId }
+        const postStudentThunk = postStudent(studentData);
+        store.dispatch(postStudentThunk);
+
+        //console.log(name,imgUrl, email, campusId);
+        // axios.post('/api/student', 
+        // { 'name': name,
+        //   'imageUrl':imgUrl,
+        //   'email': email,
+        //   'campusId': campusId})
+        // .then(res => res.data)
+        // .then(newStudent => {
+        //     store.dispatch(gotNewStudent(newStudent))
+        // })
+        // .catch(console.error)  
 
     }
     render() {
