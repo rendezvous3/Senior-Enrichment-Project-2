@@ -109,6 +109,9 @@ export function fetchCampuses(){
         .then(campuses => { 
             const gotCampusesAction = gotCampusesFromServer(campuses);
             dispatch(gotCampusesAction);
+            if(campuses.length) {
+                dispatch(writeStudentCampusId(campuses[0].id))
+            }
         })
     }
 }
@@ -129,7 +132,7 @@ export function postCampus(campusData) {
         axios.post('/api/campus', campusData)
         .then(res => res.data)
         .then(newCampus => {
-            store.dispatch(gotNewCampus(newCampus));
+            dispatch(gotNewCampus(newCampus));
         })
         .catch(console.error)
     }
@@ -140,7 +143,7 @@ export function postStudent(studentData) {
         axios.post('/api/student', studentData)
         .then(res => res.data)
         .then(newStudent => {
-            store.dispatch(gotNewStudent(newStudent))
+            dispatch(gotNewStudent(newStudent))
         })
         .catch(console.error)         
     }
@@ -155,7 +158,7 @@ const InitialState = {
     currentStudentName: '',
     currentStudentImg: '',
     currentStudentEmail: '',
-    campusId: ''
+    campusId: 1
 }
 
 // REDUCER
@@ -181,7 +184,7 @@ function reducer(state=InitialState, action) {
         case GOT_NEW_STUDENT:
             return Object.assign({}, state, { students: state.students.concat(action.newStudent) });
         case WRITE_STUDENT_CAMPUS_ID:
-            return Object.assign({}, state, { campusId: action.campusId });            
+            return Object.assign({}, state, { campusId: action.campusId });                        
         default:
             return state    
     }

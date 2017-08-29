@@ -76,7 +76,7 @@ export default class AddStudent extends Component {
         })
         const selectOptions = (<div className="form-group">
                 <label htmlFor="selectCampus">Select Campus</label>
-                <select value={this.state.campusId || this.state.campuses[0].id || ''}
+                <select value={this.state.campusId}
                         onChange={this.handleChangeCampusId}
                         className="selectpicker form-control"
                         data-live-search="true" 
