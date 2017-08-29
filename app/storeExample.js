@@ -1,4 +1,6 @@
-import { createStore } from 'redux';
+import { applyMiddleware, createStore } from 'redux';
+import createLogger from 'redux-logger';
+import { composeWithDevTools } from 'redux-devtools-extension';
 
 // ACTION TYPES
 const GOT_STUDENTS_FROM_SERVER = 'GOT_STUDENTS_FROM_SERVER';
@@ -134,5 +136,16 @@ function reducer(state=InitialState, action) {
     }
 }
 
-const store = createStore(reducer);
+//const store = createStore(reducer, applyMiddleware(logger));
+const store = createStore(reducer, composeWithDevTools(applyMiddleware(
+    createLogger()
+  )));
 export default store;
+
+// const store = createStore(
+//   reducer,
+//   composeWithDevTools(applyMiddleware(
+//     thunkMiddleware,
+//     createLogger()
+//   ))
+// );

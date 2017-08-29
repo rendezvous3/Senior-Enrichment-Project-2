@@ -64,18 +64,6 @@ export default class AddStudent extends Component {
         .catch(console.error)  
 
     }
-
-//     const InitialState = {
-//     students: [],
-//     campuses: [],
-//     currentCampusEntry: '',
-//     currentImgUrl: '',
-//     currentStudentName: '',
-//     currentStudentImg: '',
-//     currentStudentEmail: '',
-//     campusId: ''
-// }
-
     render() {
         if(this.state.campuses.length){
         const campusOptions = this.state.campuses.map((campus, i) => {
