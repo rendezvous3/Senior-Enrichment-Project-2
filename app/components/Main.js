@@ -40,11 +40,13 @@ export default class Main extends Component {
         return (<Router>
                     <div>
                         <Navbar />
+                        <div className="container">
                         <Switch>
                             <Route exact path ="/" render={()=> <CampusList campuses={this.state.campuses} />} />
                             <Route exact path ="/campus" render={()=> <CampusList campuses={this.state.campuses} />} />
                             <Route exact path ="/student" render={() => <StudentList students={this.state.students} /> } />
                         </Switch>
+                        </div>
                     </div>
                 </Router>)
     }
