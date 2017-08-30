@@ -1,6 +1,7 @@
 const student = require('express').Router()
 const db = require('../../db');
 const Student = require('../../db/models').Student;
+const Campus = require('../../db/models').Campus;
 
 student.get('/', (req, res, next) => {
   	Student.findAll({

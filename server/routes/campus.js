@@ -4,7 +4,7 @@ const Campus = require('../../db/models').Campus;
 const Student = require('../../db/models').Student;
 
 campus.get('/', (req, res, next) => {
-    Campus.findAll({})
+    Campus.findAll({ include: [{ all: true }] })
     .then(campuses => res.json(campuses))
     .catch(next)
 });

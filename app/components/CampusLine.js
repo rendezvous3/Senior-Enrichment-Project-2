@@ -25,10 +25,13 @@ export default class StudentLine extends Component {
 
     render() {
         const campus = this.props.campus
-        return(<div className="col-xs-6 col-md-3">
+        return(<div className="col-xs-12 col-sm-6 col-md-3">
                         <Link to={`/campus/${campus.id}`} className="thumbnail">
                         <img src={campus.imageUrl} alt={campus.name} className="img-responsive" />
                         <p>{ campus.name }</p>
+                        </Link>
+                        <Link to={`/campus/${campus.id}`}>
+                        <button className="btn btn-default">View</button>
                         </Link>
                         <button className="btn btn-default">Edit</button>
                         <button className="btn btn-default"

@@ -5,7 +5,9 @@ import store, { writeStudentCampusId,
                 writeStudentImg,
                 writeStudentEmail,
                 gotNewStudent,
-                postStudent } from '../storeExample';
+                postStudent,
+                fetchCampuses,
+                currentCampus } from '../storeExample';
 
 
 export default class AddStudent extends Component {
@@ -28,6 +30,8 @@ export default class AddStudent extends Component {
 
     componentWillUnmount() {
         this.unsubscribe();
+        const fetchCampusesThunk = fetchCampuses()
+        store.dispatch(fetchCampusesThunk);
     }
 
     handleChangeName(e){
@@ -44,6 +48,8 @@ export default class AddStudent extends Component {
 
     handleChangeCampusId(e) {
         store.dispatch(writeStudentCampusId(e.target.value))
+        const campus = this.state.campuses.filter((campus)=>campus.id === +e.target.value)[0];
+        store.dispatch(currentCampus(campus))
     }
 
     handleSubmit(e) {
@@ -52,8 +58,9 @@ export default class AddStudent extends Component {
         const imageUrl = this.state.currentStudentImg
         const email = this.state.currentStudentEmail
         const campusId = this.state.campusId
+        const currentCampus = store.getState().currentCampus
         const studentData = { name, imageUrl, email, campusId }
-        const postStudentThunk = postStudent(studentData);
+        const postStudentThunk = postStudent(studentData,currentCampus);
         store.dispatch(postStudentThunk);
 
     }

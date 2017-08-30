@@ -22,9 +22,17 @@ const WRITE_STUDENT_CAMPUS_ID = 'WRITE_STUDENT_CAMPUS_ID';
 const GOT_NEW_STUDENT = 'GOT_NEW_STUDENT';
 
 const DELETE_STUDENT = 'DELETE_STUDENT';
+const CURRENT_CAMPUS = 'CURRENT_CAMPUS';
 
 
 // ACTION CREATORS STUDENTS
+
+export function currentCampus(currentCampus) {
+    return {
+        type: CURRENT_CAMPUS,
+        currentCampus
+    }
+}
 
 export function writeStudentCampusId(campusId) {
     return {
@@ -129,6 +137,7 @@ export function fetchCampuses(){
             dispatch(gotCampusesAction);
             if(campuses.length) {
                 dispatch(writeStudentCampusId(campuses[0].id))
+                dispatch(currentCampus(campuses[0]))
             }
         })
     }
@@ -150,17 +159,19 @@ export function postCampus(campusData) {
         axios.post('/api/campus', campusData)
         .then(res => res.data)
         .then(newCampus => {
+            newCampus.campus = store.getState().currentCampus
             dispatch(gotNewCampus(newCampus));
         })
         .catch(console.error)
     }
 }
 
-export function postStudent(studentData) {
+export function postStudent(studentData, currentCampus) {
     return function(dispatch, getState) {
         axios.post('/api/student', studentData)
         .then(res => res.data)
         .then(newStudent => {
+            newStudent.campus = currentCampus;
             dispatch(gotNewStudent(newStudent))
         })
         .catch(console.error)         
@@ -224,7 +235,9 @@ function reducer(state=InitialState, action) {
         case DELETE_STUDENT:
             return Object.assign({}, state, { students: state.students.filter((student) => student.id !== action.studentId) })
         case DELETE_CAMPUS:
-            return Object.assign({}, state, { campuses: state.campuses.filter((campus) => campus.id !== action.campusId) })                                          
+            return Object.assign({}, state, { campuses: state.campuses.filter((campus) => campus.id !== action.campusId) })
+        case CURRENT_CAMPUS:
+            return Object.assign({}, state, { currentCampus: action.currentCampus })                                              
         default:
             return state    
     }
