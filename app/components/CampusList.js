@@ -14,6 +14,8 @@ export default class CampusList extends Component {
 
     componentDidMount() {
         this.unsubscribe = store.subscribe(()=> this.setState(store.getState()));
+        const fetchCampusThunk = fetchCampuses();
+        store.dispatch(fetchCampusThunk)
     }
 
     componentWillUnmount() {

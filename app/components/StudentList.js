@@ -26,6 +26,9 @@ export default class StudentList extends Component{
         if(this.state.students.length && this.state.campuses.length) {
         console.log(this.state);
         const studentList = this.state.students.map((student, i) => {
+            if (!student.campusId) {
+                student.campus = {};
+            } 
             return (<div key={i}>
                         <StudentLine student={student} />
                         <hr />

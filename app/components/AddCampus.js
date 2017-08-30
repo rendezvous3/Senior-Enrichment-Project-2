@@ -40,14 +40,6 @@ export default class AddCampus extends Component {
         const campusData = { name, imageUrl }
         const postMessageThunk = postCampus(campusData);
         store.dispatch(postMessageThunk);
-
-
-        // axios.post('/api/campus', { name, imageUrl })
-        // .then(res => res.data)
-        // .then(newCampus => {
-        //     store.dispatch(gotNewCampus(newCampus));
-        // })
-        // .catch(console.error)
     }
 
     render() {

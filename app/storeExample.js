@@ -13,6 +13,7 @@ const WRITE_CAMPUS_IMG_URL = 'WRITE_CAMPUS_IMG_URL';
 const GOT_NEW_CAMPUS = 'GOT_NEW_CAMPUS';
 
 const DELETE_CAMPUS = 'DELETE_CAMPUS';
+const UPDATE_CAMPUS = 'UPDATE_CAMPUS';
 
 // STUDENTS
 const WRITE_STUDENT = 'WRITE_STUDENT';
@@ -26,20 +27,6 @@ const CURRENT_CAMPUS = 'CURRENT_CAMPUS';
 
 
 // ACTION CREATORS STUDENTS
-
-export function currentCampus(currentCampus) {
-    return {
-        type: CURRENT_CAMPUS,
-        currentCampus
-    }
-}
-
-export function writeStudentCampusId(campusId) {
-    return {
-        type: WRITE_STUDENT_CAMPUS_ID,
-        campusId
-    }
-}
 
 export function writeStudent(currentStudentName) {
     return {
@@ -87,6 +74,20 @@ export function gotStudentsFromServer(students) {
 
 // ACTION CREATORS CAMPUSES
 
+export function currentCampus(currentCampus) {
+    return {
+        type: CURRENT_CAMPUS,
+        currentCampus
+    }
+}
+
+export function writeStudentCampusId(campusId) {
+    return {
+        type: WRITE_STUDENT_CAMPUS_ID,
+        campusId
+    }
+}
+
 export function gotCampusesFromServer(campuses) {
     return {
         type: GOT_CAMPUSES_FROM_SERVER,
@@ -121,6 +122,13 @@ export function writeCampusImgUrl(imageUrl){
         type: DELETE_CAMPUS,
         campusId
     }
+ }
+
+ export function updateCampusAction(updatedCampus){
+     return {
+         type: UPDATE_CAMPUS,
+         updatedCampus
+     }
  }
 
 
@@ -161,6 +169,18 @@ export function postCampus(campusData) {
         .then(newCampus => {
             newCampus.campus = store.getState().currentCampus
             dispatch(gotNewCampus(newCampus));
+        })
+        .catch(console.error)
+    }
+}
+
+export function updateCampus(campusId, newData) {
+    return function thunk(dispatch, getState){
+        axios.put(`/api/campus/${campusId}`, newData)
+        .then(res => res.data)
+        .then(updatedCampus => {
+            console.log(updatedCampus[1][0]);
+            dispatch(updateCampusAction(updatedCampus[1][0]));
         })
         .catch(console.error)
     }
@@ -237,7 +257,15 @@ function reducer(state=InitialState, action) {
         case DELETE_CAMPUS:
             return Object.assign({}, state, { campuses: state.campuses.filter((campus) => campus.id !== action.campusId) })
         case CURRENT_CAMPUS:
-            return Object.assign({}, state, { currentCampus: action.currentCampus })                                              
+            return Object.assign({}, state, { currentCampus: action.currentCampus }) 
+        case UPDATE_CAMPUS:
+            return Object.assign({}, state, { campuses:
+            state.campuses.map((campus) => {
+                if (campus.id === action.updatedCampus.id) {
+                    return action.updatedCampus
+                }
+                return campus 
+            }) })                                                 
         default:
             return state    
     }

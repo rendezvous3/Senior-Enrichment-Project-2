@@ -25,9 +25,15 @@ export default class StudentLine extends Component {
 
     render() {
         const student = this.props.student
+        if (Object.keys(student.campus).length) {
+            var campusName = student.campus.name;
+        } else {
+            var campusName = "N/A";
+        }
         return(<div><p><Link to={`/student/${student.id}`}><img className='profile-img' 
                src="https://image.flaticon.com/icons/png/128/149/149071.png"/>
-                  <span> </span>{student.name} | { student.email } | { student.campus.name }
+                  
+                  <span> </span>{student.name} | { student.email } | { campusName }
                    </Link>
                   <div className="pull-right">
                     <Link to={`/student/${student.id}`}><button className="btn btn-default">View</button></Link> 
