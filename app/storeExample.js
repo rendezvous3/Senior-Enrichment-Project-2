@@ -12,12 +12,16 @@ const WRITE_CAMPUS = 'WRITE_CAMPUS';
 const WRITE_CAMPUS_IMG_URL = 'WRITE_CAMPUS_IMG_URL';
 const GOT_NEW_CAMPUS = 'GOT_NEW_CAMPUS';
 
+const DELETE_CAMPUS = 'DELETE_CAMPUS';
+
 // STUDENTS
 const WRITE_STUDENT = 'WRITE_STUDENT';
 const WRITE_STUDENT_IMG_URL = 'WRITE_STUDENT_IMG_URL';
 const WRITE_STUDENT_EMAIL = 'WRITE_STUDENT_EMAIL';
 const WRITE_STUDENT_CAMPUS_ID = 'WRITE_STUDENT_CAMPUS_ID';
 const GOT_NEW_STUDENT = 'GOT_NEW_STUDENT';
+
+const DELETE_STUDENT = 'DELETE_STUDENT';
 
 
 // ACTION CREATORS STUDENTS
@@ -56,6 +60,13 @@ export function gotNewStudent(student) {
         newStudent: student
     }
 }
+
+export function deleteStudentAction(studentId) {
+    return {
+        type: DELETE_STUDENT,
+        studentId
+    }
+}  
 
 
 // ACTION CREATORS
@@ -96,6 +107,13 @@ export function writeCampusImgUrl(imageUrl){
         currentImgUrl: imageUrl
     }
 }
+
+ export function deleteCampusAction(campusId) {
+    return {
+        type: DELETE_CAMPUS,
+        campusId
+    }
+ }
 
 
 // THUNK CREATORS
@@ -149,6 +167,24 @@ export function postStudent(studentData) {
     }
 }
 
+export function deleteStudent(studentId) {
+    return function(dispatch, getState) {
+        axios.delete(`api/student/${studentId}`)
+        .then(res => res.data)
+        .then(() => dispatch(deleteStudentAction(studentId)))
+        .catch(console.error)
+    }
+}
+
+export function deleteCampus(campusId) {
+    return function(dispatch, getState) {
+        axios.delete(`api/campus/${campusId}`)
+        .then(res => res.data)
+        .then(() => dispatch(deleteCampusAction(campusId)))
+        .catch(console.error)
+    }
+}
+
 
 const InitialState = {
     students: [],
@@ -184,16 +220,15 @@ function reducer(state=InitialState, action) {
         case GOT_NEW_STUDENT:
             return Object.assign({}, state, { students: state.students.concat(action.newStudent) });
         case WRITE_STUDENT_CAMPUS_ID:
-            return Object.assign({}, state, { campusId: action.campusId });                        
+            return Object.assign({}, state, { campusId: action.campusId });
+        case DELETE_STUDENT:
+            return Object.assign({}, state, { students: state.students.filter((student) => student.id !== action.studentId) })
+        case DELETE_CAMPUS:
+            return Object.assign({}, state, { campuses: state.campuses.filter((campus) => campus.id !== action.campusId) })                                          
         default:
             return state    
     }
 }
-
-//const store = createStore(reducer, applyMiddleware(logger));
-// const store = createStore(reducer, composeWithDevTools(applyMiddleware(
-//     createLogger()
-//   )));
 
 
 const store = createStore(

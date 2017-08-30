@@ -39,7 +39,7 @@ export default class Main extends Component {
                             <Route path ="/campus/:campusId" component={SingleCampus} />} />
                             <Route exact path ="/campus" render={()=> <CampusList campuses={this.state.campuses} />} />
                             <Route exact path ="/student/:studentId" component={SingleStudent} /> />
-                            <Route exact path ="/student" render={() => <StudentList students={this.state.students} /> } />
+                            <Route exact path ="/student" render={() => <StudentList /> } />
                         </Switch>
                         </div>
                     </div>

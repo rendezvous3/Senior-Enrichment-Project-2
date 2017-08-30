@@ -56,18 +56,6 @@ export default class AddStudent extends Component {
         const postStudentThunk = postStudent(studentData);
         store.dispatch(postStudentThunk);
 
-        //console.log(name,imgUrl, email, campusId);
-        // axios.post('/api/student', 
-        // { 'name': name,
-        //   'imageUrl':imgUrl,
-        //   'email': email,
-        //   'campusId': campusId})
-        // .then(res => res.data)
-        // .then(newStudent => {
-        //     store.dispatch(gotNewStudent(newStudent))
-        // })
-        // .catch(console.error)  
-
     }
     render() {
         if(this.state.campuses.length){

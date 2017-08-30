@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import store, { fetchStudents, fetchCampuses } from '../storeExample';
+import store, { fetchStudents, fetchCampuses, deleteCampus } from '../storeExample';
 
 
 export default class SingleCampus extends Component {
     constructor() {
         super()
         this.state = store.getState()
+
+        this.handleDelete = this.handleDelete.bind(this)
     }
 
     componentDidMount(){
@@ -20,6 +22,12 @@ export default class SingleCampus extends Component {
         this.unsubscribe();
     }
 
+    handleDelete(){
+        let campusId = +this.props.match.params.campusId;
+        const deleteCampusThunk = deleteCampus(campusId);
+        store.dispatch(deleteCampusThunk);
+    }
+
     render() {
         const campusId = +this.props.match.params.campusId
         const campus = this.state.campuses.filter(campus => campus.id ===  campusId)[0];
@@ -30,13 +38,29 @@ export default class SingleCampus extends Component {
         </Link>)
         let studentList = <ul>{ students }</ul>
         if(!studentsForCampus.length) {
-            return (studentList = <p>This Campus does not have any students yet.</p>)
+            return (studentList = 
+                    <div>
+                    <h4>{campus.name}</h4>
+                    <p>This Campus does not have any students yet.</p>                
+                    <hr/>
+                    <div>
+                        <button className="btn btn-default">Edit</button>
+                        <button className="btn btn-default"
+                                onClick={this.handleDelete}>Delete</button>
+                    </div>
+                </div>)
         } else {
             return(
                 <div>
                 <h4>{campus.name}</h4>
                 <hr/>
                 { studentList }
+                <hr/>
+                <div>
+                    <button className="btn btn-default">Edit</button>
+                    <button className="btn btn-default"
+                            onClick={this.handleDelete}>Delete</button>
+                </div>
                 </div>);
         }
     }    

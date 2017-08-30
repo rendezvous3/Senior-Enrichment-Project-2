@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import AddStudent from './AddStudent';
 import store, { fetchStudents, fetchCampuses } from '../storeExample';
 import { Link } from 'react-router-dom';
-
+import StudentLine from './StudentLine';
 
 export default class StudentList extends Component{
     constructor(props) {
@@ -26,15 +26,15 @@ export default class StudentList extends Component{
         if(this.state.students.length && this.state.campuses.length) {
         console.log(this.state);
         const studentList = this.state.students.map((student, i) => {
-            return (<Link to={`/student/${student.id}`}  key={i}>
-                <p><img className='profile-img' 
-               src="https://image.flaticon.com/icons/png/128/149/149071.png"/>
-                  <span> </span>{student.name}  - { student.campus.name }</p></Link>)
+            return (<div key={i}>
+                        <StudentLine student={student} />
+                        <hr />
+                    </div>)
         });
             return(<div className="row">
                 <div className="col-sm-9">
-                    <div className="col-sm-8 col-sm-offset-2">   
-                    <h4>Student List</h4>
+                    <div className="col-sm-8 col-sm-offset-2">
+                        <h4>Student List</h4>
                     <hr />
                     {studentList}
                     </div>
@@ -44,7 +44,17 @@ export default class StudentList extends Component{
                 </div>
             </div>)
         } else {
-            return (<div>Loading...</div>)
+            return (<div className="row">
+                <div className="col-sm-9">
+                    <div className="col-sm-8 col-sm-offset-2">
+                        <h4>Student List</h4>
+                    <hr />
+                    </div>
+                </div>
+                <div className="col-sm-3">
+                    <AddStudent />
+                </div>
+            </div>)
         }
 
     }

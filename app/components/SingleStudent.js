@@ -29,6 +29,7 @@ export default class SingleStudent extends Component {
                     <h4><img className='profile-img-profile' src="https://image.flaticon.com/icons/png/128/149/149071.png"/>  {student.name}</h4>
                     <hr/>
                     <p>Campus: <Link to={`/campus/${student.campus.id}`} >{student.campus.name}</Link></p>
+                    <p>Email: {student.campus.name}</p>
                 </div>
                 <div className="col-sm-4">
                 </div>
