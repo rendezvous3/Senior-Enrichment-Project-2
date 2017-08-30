@@ -35,7 +35,6 @@ export default class StudentLine extends Component {
 
     renderEdit() {
         this.setState({ editing: !this.state.editing });
-
     }
 
     handleChangeName(e) {
