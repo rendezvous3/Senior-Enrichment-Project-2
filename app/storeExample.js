@@ -181,13 +181,15 @@ export function postCampus(campusData) {
     }
 }
 
-export function updateCampus(campusId, newData) {
+export function updateCampus(campusId, newData, campStudents) {
     return function thunk(dispatch, getState){
         axios.put(`/api/campus/${campusId}`, newData)
         .then(res => res.data)
         .then(updatedCampus => {
             console.log(updatedCampus[1][0]);
-            dispatch(updateCampusAction(updatedCampus[1][0]));
+            const uptCampus = updatedCampus[1][0];
+            uptCampus.students = campStudents
+            dispatch(updateCampusAction(uptCampus));
         })
         .catch(console.error)
     }

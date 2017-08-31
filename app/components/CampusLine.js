@@ -57,7 +57,8 @@ export default class StudentLine extends Component {
             name: this.state.currCampus,
             imageUrl: this.state.currImg
         }
-        const updateCampusThunk = updateCampus(ID, updatedData);
+        const students = this.props.campus.students
+        const updateCampusThunk = updateCampus(ID, updatedData, students);
         store.dispatch(updateCampusThunk);
         this.setState({
             editing: false,
@@ -67,6 +68,7 @@ export default class StudentLine extends Component {
 
     render() {
         const campus = this.props.campus
+        console.log(campus);
         if(!this.state.editing){
             return(<div className="col-xs-12 col-sm-6 col-md-3">
                         <Link to={`/campus/${campus.id}`} className="thumbnail">

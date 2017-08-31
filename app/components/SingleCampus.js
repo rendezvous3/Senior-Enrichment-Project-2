@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import store, { fetchStudents, fetchCampuses, deleteCampus } from '../storeExample';
+import StudentLine from './StudentLine';
 
 
 export default class SingleCampus extends Component {
@@ -31,10 +32,15 @@ export default class SingleCampus extends Component {
     }
 
     render() {
-        console.log(this.state);        
+        //console.log(this.state);
+        if(Object.keys(this.state.campuses).length && Object.keys(this.state.students).length) {        
         const campusId = +this.props.match.params.campusId
+        console.log(this.state)
         const campus = this.state.campuses.filter(campus => campus.id ===  campusId)[0];
-        // const studentsForCampus = this.state.students.filter(student => student.id ===  campusId)
+        //const studentsForCampus = this.state.students.filter(student => student.id ===  campusId);
+        console.log(campusId);
+        console.log(campus);
+        console.log(studentsForCampus);
         const studentsForCampus = campus.students;
         const students = studentsForCampus.map((student, i)=>
         <Link key={i} to={`/student/${student.id}`}>
@@ -60,12 +66,10 @@ export default class SingleCampus extends Component {
                 <hr/>
                 { studentList }
                 <hr/>
-                <div>
-                    <button className="btn btn-default">Edit</button>
-                    <button className="btn btn-default"
-                            onClick={this.handleDelete}>Delete</button>
-                </div>
                 </div>);
         }
-    }    
+    }else {
+     return (<div>Loading...</div>);   
+    }
+    }     
 }
