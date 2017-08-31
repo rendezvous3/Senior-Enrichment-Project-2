@@ -6,7 +6,7 @@ export default class Navbar extends Component {
     return(<nav className="navbar navbar-inverse">
                 <div className="container-fluid">
                     <div className="navbar-header">
-                        <a className="navbar-brand" href="#">Margaret Hamilton Interplanetary Academy of JavaScript</a>
+                        <Link className="navbar-brand" to='/campus'>Margaret Hamilton Interplanetary Academy of JavaScript</Link>
                         </div>
                         <ul className="nav navbar-nav">
                         <li className="active"><Link to="/campus">Home</Link></li>

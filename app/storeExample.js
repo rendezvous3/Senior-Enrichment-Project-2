@@ -12,6 +12,7 @@ const WRITE_CAMPUS = 'WRITE_CAMPUS';
 const WRITE_CAMPUS_IMG_URL = 'WRITE_CAMPUS_IMG_URL';
 const GOT_NEW_CAMPUS = 'GOT_NEW_CAMPUS';
 
+const CURRENT_CAMPUS = 'CURRENT_CAMPUS';
 const DELETE_CAMPUS = 'DELETE_CAMPUS';
 const UPDATE_CAMPUS = 'UPDATE_CAMPUS';
 
@@ -23,7 +24,8 @@ const WRITE_STUDENT_CAMPUS_ID = 'WRITE_STUDENT_CAMPUS_ID';
 const GOT_NEW_STUDENT = 'GOT_NEW_STUDENT';
 
 const DELETE_STUDENT = 'DELETE_STUDENT';
-const CURRENT_CAMPUS = 'CURRENT_CAMPUS';
+const UPDATE_STUDENT = 'UPDATE_STUDENT';
+
 
 
 // ACTION CREATORS STUDENTS
@@ -63,13 +65,18 @@ export function deleteStudentAction(studentId) {
     }
 }  
 
-
-// ACTION CREATORS
 export function gotStudentsFromServer(students) {
     return {
         type: GOT_STUDENTS_FROM_SERVER,
         students
     }
+}
+
+export function updateStudentAction(updatedStudent) {
+    return {
+        type: UPDATE_STUDENT,
+        updatedStudent
+    }    
 }
 
 // ACTION CREATORS CAMPUSES
@@ -198,6 +205,20 @@ export function postStudent(studentData, currentCampus) {
     }
 }
 
+export function updateStudent(studentId, studentNewData, currentCampus) {
+    return function(dispatch, getState){
+        axios.put(`/api/student/${studentId}`, studentNewData)
+        .then(res => res.data)
+        .then(updatedStudent => {
+            console.log(updatedStudent[1][0]);
+            const upStudent = updatedStudent[1][0];
+            upStudent.campus = currentCampus;
+            upStudent.campusId = +currentCampus.id;
+            dispatch(updateStudentAction(upStudent));
+        })
+    }
+}
+
 export function deleteStudent(studentId) {
     return function(dispatch, getState) {
         axios.delete(`api/student/${studentId}`)
@@ -265,7 +286,16 @@ function reducer(state=InitialState, action) {
                     return action.updatedCampus
                 }
                 return campus 
-            }) })                                                 
+            }) })
+        case UPDATE_STUDENT:
+            return Object.assign({}, state, {
+                students: state.students.map(student => {
+                    if(student.id === action.updatedStudent.id) {
+                        return action.updatedStudent
+                    }
+                    return student
+                })
+            })                                                     
         default:
             return state    
     }

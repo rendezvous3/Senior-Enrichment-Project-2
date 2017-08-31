@@ -16,6 +16,8 @@ export default class SingleCampus extends Component {
         this.unsubscribe = store.subscribe(()=> this.setState(store.getState()));
         const fetchStudentsThunk = fetchStudents();
         store.dispatch(fetchStudentsThunk);
+        // const fetchCampusesThunk = fetchCampuses();
+        // store.dispatch(fetchCampusesThunk);
     }
 
     componentWillUnmount() {
@@ -29,9 +31,11 @@ export default class SingleCampus extends Component {
     }
 
     render() {
+        console.log(this.state);        
         const campusId = +this.props.match.params.campusId
         const campus = this.state.campuses.filter(campus => campus.id ===  campusId)[0];
-        const studentsForCampus = this.state.students.filter(student => student.id ===  campusId)
+        // const studentsForCampus = this.state.students.filter(student => student.id ===  campusId)
+        const studentsForCampus = campus.students;
         const students = studentsForCampus.map((student, i)=>
         <Link key={i} to={`/student/${student.id}`}>
             <p><img className='profile-img' src="https://image.flaticon.com/icons/png/128/149/149071.png"/> { student.name } | { student.email }</p>

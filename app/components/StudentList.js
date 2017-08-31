@@ -36,7 +36,7 @@ export default class StudentList extends Component{
         });
             return(<div className="row">
                 <div className="col-sm-9">
-                    <div className="col-sm-11 col-sm-offset-1">
+                    <div className="col-sm-11 col-sm-offset-0">
                         <h4>Student List</h4>
                     <hr />
                     {studentList}
