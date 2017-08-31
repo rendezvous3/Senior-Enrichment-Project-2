@@ -43,9 +43,10 @@ export default class SingleCampus extends Component {
         console.log(studentsForCampus);
         const studentsForCampus = campus.students;
         const students = studentsForCampus.map((student, i)=>
-        <Link key={i} to={`/student/${student.id}`}>
-            <p><img className='profile-img' src="https://image.flaticon.com/icons/png/128/149/149071.png"/> { student.name } | { student.email }</p>
-        </Link>)
+            <div key={i}>
+            <p><Link  to={`/student/${student.id}`}><img className='profile-img' src="https://image.flaticon.com/icons/png/128/149/149071.png"/></Link> <Link  to={`/student/${student.id}`}>{ student.name }</Link> | { student.email }</p>
+            <hr/>
+            </div>)
         let studentList = <ul>{ students }</ul>
         if(!studentsForCampus.length) {
             return (studentList = 
@@ -61,11 +62,21 @@ export default class SingleCampus extends Component {
                 </div>)
         } else {
             return(
-                <div>
-                <h4>{campus.name}</h4>
+                
+                <div className='col-sm-8 col-sm-offset-2'>
+                    <h4>{campus.name}</h4>
+                    <hr/>
+                <div className="row">
+                    <div className="col-sm-4 pull-left">
+                    <div className='thumbnail'>
+                        <img className="img-responsive" src={campus.imageUrl} />
+                    </div>
+                    </div>
+                </div>
                 <hr/>
+                <div className="row">
                 { studentList }
-                <hr/>
+                </div>
                 </div>);
         }
     }else {

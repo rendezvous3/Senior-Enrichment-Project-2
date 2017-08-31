@@ -71,7 +71,7 @@ export default class StudentLine extends Component {
         console.log(campus);
         if(!this.state.editing){
             return(<div className="col-xs-12 col-sm-6 col-md-3">
-                        <Link to={`/campus/${campus.id}`} className="thumbnail">
+                        <Link to={`/campus/${campus.id}`} className="thumbnail front-img">
                         <img src={campus.imageUrl} alt={campus.name} className="img-responsive" />
                         <p>{ campus.name }</p>
                         </Link>

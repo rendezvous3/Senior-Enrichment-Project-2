@@ -25,11 +25,11 @@ export default class SingleStudent extends Component {
         const student = this.state.students.filter(student => student.id ===  studentId)[0];
         if(student) {
             return(<div className="row">
-                <div className="col-sm-8">
+                <div className="col-sm-6 col-sm-offset-3">
                     <h4><img className='profile-img-profile' src="https://image.flaticon.com/icons/png/128/149/149071.png"/>  {student.name}</h4>
                     <hr/>
                     <p>Campus: <Link to={`/campus/${student.campus.id}`} >{student.campus.name}</Link></p>
-                    <p>Email: {student.campus.name}</p>
+                    <p>Email: {student.email}</p>
                 </div>
                 <div className="col-sm-4">
                 </div>
