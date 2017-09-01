@@ -41,7 +41,6 @@ export default class StudentLine extends Component {
         this.setState({
             currCampus: e.target.value,
         })
-        console.log(this.state);
     }
 
     handleImgChange(e){
@@ -63,12 +62,10 @@ export default class StudentLine extends Component {
         this.setState({
             editing: false,
         })
-        //store.getState()
     }
 
     render() {
         const campus = this.props.campus
-        console.log(campus);
         if(!this.state.editing){
             return(<div className="col-xs-12 col-sm-6 col-md-3">
                         <Link to={`/campus/${campus.id}`} className="thumbnail front-img">

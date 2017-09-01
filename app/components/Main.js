@@ -20,9 +20,6 @@ export default class Main extends Component {
 
         const fetchCampusesThunk = fetchCampuses();
         store.dispatch(fetchCampusesThunk);
-
-        // const fetchStudentsThunk = fetchStudents();
-        // store.dispatch(fetchStudentsThunk);
     }
 
     componentWillUnmount() {
@@ -46,8 +43,3 @@ export default class Main extends Component {
                 </Router>)
     }
 }
-
- 
-// <Route exact path ="/student" component={StudentList} />
-// <Route exact path ="/campus" component={CampusList} />
-//

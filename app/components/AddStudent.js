@@ -24,7 +24,6 @@ export default class AddStudent extends Component {
     componentDidMount(){
         this.unsubscribe = store.subscribe(()=> {
             this.setState(store.getState());
-            //console.log(this.state);
         });
     }
 
@@ -109,7 +108,7 @@ export default class AddStudent extends Component {
                     </form>   
                 </div>)
         } else {
-            return (<div>Loading...</div>);
+            return (<div></div>);
         }
     }
 }

@@ -46,33 +46,26 @@ export default class StudentLine extends Component {
 
     handleChangeName(e){
         this.setState({ currName: e.target.value })
-        console.log(this.state)
     }
 
     handleChangeImg(e) {
         this.setState({ currImg: e.target.value })
-        console.log(this.state)
     }
 
     handleChangeEmail(e){
         this.setState({ currEmail: e.target.value })
-        console.log(this.state)
     }
 
     handleChangeCampusId(e){
-        //console.log(this.state.campuses)
         const campusId = +e.target.value
         const campus = this.state.campuses.find((campus) => campus.id === campusId)   
         this.setState({ 
             currentlySelectedCampus: campus,
             currentlySelectedCampusId: campusId
-         })
-        console.log(this.state) 
+         }) 
     }
 
     handleSubmit(e){
-        //console.log('Submit');
-        console.log()
         e.preventDefault();
         const updatedData = {
             name: this.state.currName,
@@ -88,7 +81,6 @@ export default class StudentLine extends Component {
     }
 
     render() {
-        console.log(this.state) 
         const student = this.props.student
         if(this.state.campuses.length){
         const campusOptions = this.state.campuses.map((campus, i) => {

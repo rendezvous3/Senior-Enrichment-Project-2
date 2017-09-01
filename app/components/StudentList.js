@@ -24,7 +24,6 @@ export default class StudentList extends Component{
 
     render(){
         if(this.state.students.length && this.state.campuses.length) {
-        console.log(this.state);
         const studentList = this.state.students.map((student, i) => {
             if (!student.campusId) {
                 student.campus = {};
@@ -62,6 +61,3 @@ export default class StudentList extends Component{
 
     }
 }
-
-
-// { this.state.campuses.filter(campus => campus.id === student.id)[0].name }

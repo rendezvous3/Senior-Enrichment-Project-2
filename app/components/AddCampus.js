@@ -40,10 +40,12 @@ export default class AddCampus extends Component {
         const campusData = { name, imageUrl }
         const postMessageThunk = postCampus(campusData);
         store.dispatch(postMessageThunk);
+        store.dispatch(writeCampus(' '));
+        store.dispatch(writeCampusImgUrl(' '));
+        store.getState();
     }
 
     render() {
-        //console.log(this.props.addCampus)
         return(<div className="text-center">
                 <h4>Add a Campus</h4>
                     <hr />

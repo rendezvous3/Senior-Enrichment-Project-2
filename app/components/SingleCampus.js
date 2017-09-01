@@ -17,8 +17,6 @@ export default class SingleCampus extends Component {
         this.unsubscribe = store.subscribe(()=> this.setState(store.getState()));
         const fetchStudentsThunk = fetchStudents();
         store.dispatch(fetchStudentsThunk);
-        // const fetchCampusesThunk = fetchCampuses();
-        // store.dispatch(fetchCampusesThunk);
     }
 
     componentWillUnmount() {
@@ -32,33 +30,34 @@ export default class SingleCampus extends Component {
     }
 
     render() {
-        //console.log(this.state);
         if(Object.keys(this.state.campuses).length && Object.keys(this.state.students).length) {        
         const campusId = +this.props.match.params.campusId
-        console.log(this.state)
         const campus = this.state.campuses.filter(campus => campus.id ===  campusId)[0];
         //const studentsForCampus = this.state.students.filter(student => student.id ===  campusId);
-        console.log(campusId);
-        console.log(campus);
-        console.log(studentsForCampus);
-        const studentsForCampus = campus.students;
-        const students = studentsForCampus.map((student, i)=>
+        var studentsForCampus = [];
+        if (campus.students !== undefined) {
+            studentsForCampus = campus.students;
+            const students = studentsForCampus.map((student, i)=>
             <div key={i}>
             <p><Link  to={`/student/${student.id}`}><img className='profile-img' src="https://image.flaticon.com/icons/png/128/149/149071.png"/></Link> <Link  to={`/student/${student.id}`}>{ student.name }</Link> | { student.email }</p>
             <hr/>
             </div>)
-        let studentList = <ul>{ students }</ul>
+            var studentList = <ul>{ students }</ul>
+        }
         if(!studentsForCampus.length) {
             return (studentList = 
-                    <div>
+                    <div className='col-sm-8 col-sm-offset-2'>
                     <h4>{campus.name}</h4>
-                    <p>This Campus does not have any students yet.</p>                
                     <hr/>
-                    <div>
-                        <button className="btn btn-default">Edit</button>
-                        <button className="btn btn-default"
-                                onClick={this.handleDelete}>Delete</button>
+                    <div className='row'>
+                    <div className="col-sm-4 pull-left">
+                        <div className='thumbnail'>
+                        <img className="img-responsive" src={campus.imageUrl} />
+                        </div>
                     </div>
+                    </div>
+                    <hr/>
+                    <p>This Campus does not have any students yet.</p>                
                 </div>)
         } else {
             return(
@@ -80,7 +79,7 @@ export default class SingleCampus extends Component {
                 </div>);
         }
     }else {
-     return (<div>Loading...</div>);   
-    }
+     return (<div>This Campus does not have any students yet.</div>);   
+        }
     }     
 }

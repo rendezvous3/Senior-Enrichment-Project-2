@@ -174,6 +174,8 @@ export function postCampus(campusData) {
         axios.post('/api/campus', campusData)
         .then(res => res.data)
         .then(newCampus => {
+            dispatch(writeCampus(''));
+            dispatch(writeCampusImgUrl(''));
             newCampus.campus = store.getState().currentCampus
             dispatch(gotNewCampus(newCampus));
         })
@@ -202,6 +204,9 @@ export function postStudent(studentData, currentCampus) {
         .then(newStudent => {
             newStudent.campus = currentCampus;
             dispatch(gotNewStudent(newStudent))
+            dispatch(writeStudent(''));
+            dispatch(writeStudentImg(''));
+            dispatch(writeStudentEmail(''));
         })
         .catch(console.error)         
     }
